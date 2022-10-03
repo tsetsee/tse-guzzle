@@ -12,7 +12,7 @@ use RuntimeException;
 
 class TseGuzzle
 {
-    protected Client $guzzle;
+    protected Client $client;
     /**
     * @param array<string, mixed> $config
     */
@@ -44,7 +44,7 @@ class TseGuzzle
 
         $config['handler'] = $handler;
 
-        $this->guzzle = new Client($config);
+        $this->client = new Client($config);
     }
 
     protected function getAccessToken(): string
