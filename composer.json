@@ -1,0 +1,22 @@
+{
+    "name": "tsetsee/tse-guzzle",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Tsetsee\\TseGuzzle\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tsetsee",
+            "email": "tsetsee.yugi@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.0",
+        "guzzlehttp/guzzle": "^7.0",
+        "gmponos/guzzle_logger": "^2.2"
+    }
+}
