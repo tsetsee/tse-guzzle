@@ -24,15 +24,31 @@ class TseGuzzle
             $handler = HandlerStack::create();
         }
 
-        $handler->push(function (callable $handler) {
-            return function (RequestInterface $request, array $options) use ($handler) {
-                if (!empty($options['oauth2'])) {
-                    $request = $request->withHeader('Authorization', 'Bearer '.$this->getAccessToken());
-                }
+        if (!empty($config['oauth2'])) {
+            $handler->push(function (callable $handler) use ($config) {
+                return function (RequestInterface $request, array $options) use ($handler, $config) {
+                    if (!empty($options['oauth2'])) {
+                        $method = $config['oauth2'] ?? 'bearer';
+                        switch($method) {
+                            case 'custom_header':
+                                $request = $request->withHeader(
+                                    $config['oauth2_custom_header'],
+                                    $this->getAccessToken()
+                                );
+                                break;
+                            case 'bearer':
+                            default:
+                                $request = $request->withHeader(
+                                    'Authorization',
+                                    'Bearer '.$this->getAccessToken()
+                                );
+                        }
+                    }
 
-                return $handler($request, $options);
-            };
-        });
+                    return $handler($request, $options);
+                };
+            });
+        }
 
         if (!empty($config['logger'])) {
             if ($config['logger'] instanceof LoggerInterface) {
