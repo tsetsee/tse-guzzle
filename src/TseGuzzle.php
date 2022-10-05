@@ -24,22 +24,23 @@ class TseGuzzle
             $handler = HandlerStack::create();
         }
 
-        if (!empty($config['oauth2'])) {
-            $handler->push(function (callable $handler) use ($config) {
-                return function (RequestInterface $request, array $options) use ($handler, $config) {
+        if (isset($config['oauth2'])) {
+            $oauth2 = $config['oauth2'] ?? 'bearer';
+            $authHeader = $oauth2 === 'custom_header' ? $config['oauth2_custom_header'] ?? null : 'Authorization';
+            $handler->push(function (callable $handler) use ($oauth2, $authHeader) {
+                return function (RequestInterface $request, array $options) use ($handler, $oauth2, $authHeader) {
                     if (!empty($options['oauth2'])) {
-                        $method = $config['oauth2'] ?? 'bearer';
-                        switch($method) {
+                        switch($oauth2) {
                             case 'custom_header':
                                 $request = $request->withHeader(
-                                    $config['oauth2_custom_header'],
+                                    $authHeader,
                                     $this->getAccessToken()
                                 );
                                 break;
                             case 'bearer':
                             default:
                                 $request = $request->withHeader(
-                                    'Authorization',
+                                    $authHeader,
                                     'Bearer '.$this->getAccessToken()
                                 );
                         }
@@ -48,6 +49,8 @@ class TseGuzzle
                     return $handler($request, $options);
                 };
             });
+
+            unset($config['oauth2']);
         }
 
         if (!empty($config['logger'])) {
