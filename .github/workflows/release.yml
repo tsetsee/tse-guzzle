@@ -6,7 +6,7 @@ on:
 jobs:
     release:
         name: Release
-        runs-on: node:16-buster-slim
+        runs-on: ubuntu-latest
         steps:
             - name: Prepare
               run: apt-get update && apt-get install -y --no-install-recommends git-core ca-certificates
