@@ -16,7 +16,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.0",
-        "guzzlehttp/guzzle": "^7.0",
+        "guzzlehttp/guzzle": "^6.0||^7.0",
         "gmponos/guzzle_logger": "^2.2"
     }
 }
