@@ -8,11 +8,6 @@ jobs:
         name: Release
         runs-on: ubuntu-latest
         steps:
-            - name: Prepare
-              run: apt-get update && apt-get install -y --no-install-recommends git-core ca-certificates
-            - name: Install plugins
-              run: npm install -g semantic-release @semantic-release/gitlab
-            - name: Release
-              env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: semantic-release
+          - uses: actions/checkout@v2
+          - uses: actions/setup-node@v2
+          - run: npm ci && npm run dist && npx semantic-release
