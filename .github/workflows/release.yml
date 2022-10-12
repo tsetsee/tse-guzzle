@@ -10,4 +10,4 @@ jobs:
         steps:
           - uses: actions/checkout@v2
           - uses: actions/setup-node@v2
-          - run: npm ci && npm run dist && npx semantic-release
+          - run: npx semantic-release
