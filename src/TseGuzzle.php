@@ -74,4 +74,9 @@ class TseGuzzle
 
         return '';
     }
+
+    public function getClient(): Client 
+    {
+        return $this->client;
+    } 
 }
