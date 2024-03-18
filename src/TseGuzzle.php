@@ -6,11 +6,13 @@ use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleLogMiddleware\LogMiddleware;
 use InvalidArgumentException;
+use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 
-class TseGuzzle
+final class TseGuzzle implements ClientInterface
 {
     protected Client $client;
     /**
@@ -75,8 +77,13 @@ class TseGuzzle
         return '';
     }
 
-    public function getClient(): Client 
+    public function getClient(): Client
     {
         return $this->client;
-    } 
+    }
+
+    public function sendRequest(RequestInterface $request): ResponseInterface
+    {
+        return $this->client->sendRequest($request);
+    }
 }

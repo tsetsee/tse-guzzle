@@ -17,6 +17,7 @@
     "require": {
         "php": "^8.0",
         "guzzlehttp/guzzle": "^6.0||^7.0",
-        "gmponos/guzzle_logger": "^2.2"
+        "gmponos/guzzle_logger": "^2.2",
+        "psr/http-client": "^1.0"
     }
 }
